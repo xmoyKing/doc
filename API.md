@@ -5,23 +5,23 @@
 
 请求中都会带UID，表示用户唯一标识（目前暂定QQ号）
 响应中有三个字段：
-  code表示响应码，0为成功，其他为错误，具体见API
-  message表示code对应的响应信息，
-  data为返回的数据，分两种类型，数组/对象，若不需要返回数据，则为空对象
+- code 表示响应码，0为成功，其他为错误，具体见API
+- message 表示code对应的响应信息，
+- data 为返回的数据，分两种类型，数组/对象，若不需要返回数据，则为空对象
 
 ## 1.QQ登录
 save_user_info
 ### request：
-```
+```json
 {
-  "UID": 1223457
+  "UID": 1223457,
   "nickname": "youngou",
   "profile_photo_url": "https://path/profile",
   "sex": 1
 }
 ```
 ### response：
-```
+```json
 {
   "code": 1,
   "message": "已存在该用户",
@@ -32,15 +32,14 @@ save_user_info
 # 地图加载
 ## 1.获取用户所有点亮景点
 get_light_area
-
 ### request：
-```
+```json
 {
   "UID": 1223457
 }
 ```
 ### response：
-```
+```json
 {
   "code": 0,
   "message": "成功",
@@ -48,25 +47,31 @@ get_light_area
     {
       "TID":100,
       "name":"腾讯大厦",
-      "latitude":22.540503,"longitude":113.934528,"level":3,"state":1,
+      "latitude":22.540503,
+      "longitude":113.934528,
+      "level":3,
+      "state":1,
       "info": {
-        "desc": "该景点是...",
-        "pics": ["http://pic1url...", "..."],
-        "..."
+        "desc": "该景点描述",
+        "pics": ["用户在改景点上传的图片1", "..."],
+        "address": "景点地址",
+        "其他字段": "可自行添加"
       }
     },
-    {"TID":102,"name":"万利达大厦","latitude":22.540730,"longitude":113.933570","level":2,"state":1}
+    {"...": "..."}
   ]
 }
 ```
-state表示是否点亮，0未点亮，1已点亮，
+
+state表示是否点亮，0未点亮，1已点亮，在此API中，返回的景点信息的state应该都是1
+
 level表示景点级别 0+
 
 ## 2.获取附近景点
 get_nearby_spot
 
 ### request：
-```
+```json
 {
   "UID": 1223457,
   "Lat": 456564.111,
@@ -78,18 +83,33 @@ Lat表示纬度
 Lng表示经度
 radius表示半径，单位公里
 ### response：
+```json
 {
   "code": 0,
   "message": "成功",
   "data": [
-    "参考获取用户所有点亮景点response"
+    {
+      "TID":100,
+      "name":"腾讯大厦",
+      "latitude":22.540503,
+      "longitude":113.934528,
+      "level":3,
+      "state":1,
+      "info": {
+        "desc": "该景点描述",
+        "pics": ["用户在改景点上传的图片1", "..."],
+        "address": "景点地址",
+        "其他字段": "可自行添加"
+      }
+    },
   ]
 }
+```
 
 ## 3.获取景点详细信息
 get_spot_detail
 ### request：
-```
+```json
 {
   "UID": 1223457,
   "TID": 411
@@ -97,6 +117,7 @@ get_spot_detail
 ```
 
 ### response：
+```json
 {
   "code": 0,
   "message": "成功",
@@ -104,26 +125,32 @@ get_spot_detail
     {
       "TID":100,
       "name":"腾讯大厦",
-      "latitude":22.540503,"longitude":113.934528,"level":3,"state":1,
+      "latitude":22.540503,
+      "longitude":113.934528,
+      "level":3,
+      "state":1,
       "info": {
-        "desc": "该景点是...",
-        "pics": ["http://pic1url...", "..."],
-        "..."
+        "desc": "该景点描述",
+        "pics": ["用户在改景点上传的图片1", "..."],
+        "address": "景点地址",
+        "其他字段": "可自行添加"
       }
     }
 }
+```
 
 
 ## 4.获取景点评论信息
 get_spot_comments
 ### request：
-```
+```json
 {
   "UID": 1223457,
   "TID": 411
 }
 ```
 ### response：
+```json
 {
   "code": 0,
   "message": "成功",
@@ -138,11 +165,12 @@ get_spot_comments
       }
   ]
 }
+```
 
 ## 5.点亮景点
 light_spot
 ### request：
-```
+```json
 {
   "UID": 1223457,
   "TID": 5
@@ -154,6 +182,7 @@ Lat表示纬度
 Lng表示经度
 TID表示景点ID
 ### response：
+```json
 {
   "code": 0,
   "message": "成功",
@@ -161,12 +190,13 @@ TID表示景点ID
     "points": 10,
   }
 }
+```
 points表示当前用户点亮景点获取到的积分
 
 ## 6.发表评论
 remark_spot
 ### request：
-```
+```json
 {
   "UID": 1223457,
   "TID": 5,
@@ -178,11 +208,13 @@ Lat表示纬度
 Lng表示经度
 comment表示发表评论内容
 ### response：
+```json
 {
   "code": 0,
   "message": "成功",
   "data": {}
 }
+```
 
 ## 7.上传图片
 upload_img 与景点无关的公用接口
@@ -194,6 +226,7 @@ upload_img 与景点无关的公用接口
 }
 ```
 ### response：
+```json
 {
   "code": 0,
   "message": "成功",
@@ -203,11 +236,12 @@ upload_img 与景点无关的公用接口
     "...."
   ]
 }
+```
 
 ## 8.捐赠
 donate
 ### request:
-```
+```json
 {
   "UID": 1223457,
   "type": 1
@@ -216,16 +250,18 @@ donate
 type表示捐赠类型
 
 ### response：
+```json
 {
   "code": 0,
   "message": "成功",
   "data": {}
 }
+```
 
 ## 9.关注/取关
 follow
 ### request:
-```
+```json
 {
   "UID": 1223457,
   "UID_T": 132423,
@@ -233,19 +269,22 @@ follow
 }
 ```
 UID_T表示关注目标
+
 type：1关注，0表示取关
 
 ### response：
+```json
 {
   "code": 0,
   "message": "成功",
   "data": {}
 }
+```
 
 ## 10.获取关系列表
 get_relations 暂定
 ### request:
-```
+```json
 {
   "UID": 1223457,
   "type": 1
@@ -254,6 +293,7 @@ get_relations 暂定
 type：0表示我关注的，1表示粉丝
 
 ### response：
+```json
 {
   "code": 0,
   "message": "成功",
@@ -267,12 +307,12 @@ type：0表示我关注的，1表示粉丝
       }
   ]
 }
-
+```
 
 ## 11.排行榜
 get_ranks
 ### request:
-```
+```json
 {
   "UID": 1223457,
   "type": 1
@@ -280,6 +320,7 @@ get_ranks
 ```
 type表示预留的排行榜类型
 ### response：
+```json
 {
   "code": 0,
   "message": "成功",
@@ -294,11 +335,12 @@ type表示预留的排行榜类型
       }
   ]
 }
+```
 
 ## 12.扫一扫
 get_spot_name
 ### request:
-```
+```json
 {
   "UID": 1223457,
   "pic": "..."
@@ -306,7 +348,7 @@ get_spot_name
 ```
 pic表示图片原文件，二进制
 ### response：
-```
+```json
 {
   "code": 0,
   "message": "成功",
@@ -317,7 +359,7 @@ pic表示图片原文件，二进制
 }
 ```
 若失败：
-```
+```json
 {
   "code": 1,
   "message": "请换一张图片",
