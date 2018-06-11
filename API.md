@@ -1,13 +1,23 @@
 本文档为API接口文档
 
 ----
-`host/common_access/method`
+
+9000端口测试进程使用：
+1. 若9000端口的upload地址不可用，则说明测试进程可能出错，使用`ps -aux | grep 9000` 查看是否存在对应端口的进程。
+2. 若端口正常，则使用`pm2 log HERE_Start`查看进程输出的信息，其中包括红色报错信息和绿色接口访问记录。
+3. 根据其中的红色报错信息查看是否代码有bug，若需要更多详细信息，请查看`/root/.pm2/logs/HERE-Start-error-0.log`文件记录。
+
+----
+`host:port/common_access/method`
 
 请求中都会带UID，表示用户唯一标识（目前暂定QQ号）
 响应中有三个字段：
 - code 表示响应码，0为成功，其他为错误，具体见API
 - message 表示code对应的响应信息，
-- data 为返回的数据，分两种类型，数组/对象，若不需要返回数据，则为空对象
+- data 为返回的数据，分两种类型，数组/对象，
+  - 返回多个相同类型的数据用数组，即使该数组只有1个元素
+  - 返回单种数据的用对象，
+  - 若不需要返回数据，则为空对象
 
 ## 1.QQ登录
 save_user_info
@@ -65,10 +75,12 @@ get_light_area
 
 state表示是否点亮，0未点亮，1已点亮，在此API中，返回的景点信息的state应该都是1
 
-level表示景点级别 0+
+level表示景点级别，目前至少有4种
+
+其他景点信息都作为info附加在其内
 
 ## 2.获取附近景点
-get_nearby_spot
+get_nearby_spot 返回Lat & Lng附近5公里以内的所有景点信息，即该用户点亮景点state未1，未点亮景点state为0。
 
 ### request：
 ```json
@@ -105,6 +117,7 @@ radius表示半径，单位公里
   ]
 }
 ```
+此API中，返回景点的state有0，有1，
 
 ## 3.获取景点详细信息
 get_spot_detail
@@ -156,7 +169,7 @@ get_spot_comments
   "message": "成功",
   "data": [
       {
-        "UID": 1223457
+        "UID": 1223457,
         "nickname": "youngou",
         "profile_photo_url": "https://path/profile",
         "sex": 1,
@@ -173,7 +186,7 @@ light_spot
 ```json
 {
   "UID": 1223457,
-  "TID": 5
+  "TID": 5,
   "Lat": 456564.111,
   "Lng": 1564.1515,
 }
@@ -299,7 +312,7 @@ type：0表示我关注的，1表示粉丝
   "message": "成功",
   "data": [
       {
-        "UID": 1223457
+        "UID": 1223457,
         "nickname": "youngou",
         "profile_photo_url": "https://path/profile",
         "sex": 1,
@@ -326,7 +339,7 @@ type表示预留的排行榜类型
   "message": "成功",
   "data": [
       {
-        "UID": 1223457
+        "UID": 1223457,
         "nickname": "youngou",
         "profile_photo_url": "https://path/profile",
         "sex": 1,
