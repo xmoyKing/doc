@@ -5,9 +5,9 @@
 9000端口测试进程使用：
 1. 若9000端口的upload地址不可用，则说明测试进程可能出错，使用`ps -aux | grep 9000` 查看是否存在对应端口的进程。
 1. 若端口正常，则使用`pm2 list`查看其中`HERE_Start`是否是`绿色online`状态，若为其他状态，可以用`pm2 restart HERE_Start`重启应用。(其中`pm2`是一个进程管理工具)
-![pm2-list](/AM-USER/doc/raw/master/img/pm2-list.png)
+![pm2-list](https://github.com/AM-USER/doc/raw/master/img/pm2-list.png)
 1. 若还是有问题，则说明代码有错误，使用`pm2 log HERE_Start`查看进程输出的信息，其中包括红色报错信息和绿色接口访问记录。
-![pm2-log-HERE-Start](/AM-USER/doc/raw/master/img/pm2-log-HERE-Start.png)
+![pm2-log-HERE-Start](https://github.com/AM-USER/doc/raw/master/img/pm2-log-HERE-Start.png)
 1. 根据其中的红色报错信息查看是否代码有bug，若需要更多详细信息，请查看`/root/.pm2/logs/HERE-Start-error-0.log`文件记录。
 
 ----
