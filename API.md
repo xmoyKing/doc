@@ -334,22 +334,35 @@ get_ranks
   "type": 1
 }
 ```
-type表示预留的排行榜类型
+type表示排行榜类型,0表示我关注的人排行榜，1表示互相关注的人的排行榜。默认是1
+数据给的比较全，每个字段给了注释，前端按需取用就好
 ### response：
 ```json
 {
-  "code": 0,
-  "message": "成功",
-  "data": [
-      {
-        "UID": 1223457,
-        "nickname": "youngou",
-        "profile_photo_url": "https://path/profile",
-        "sex": 1,
-        "points": 1212,
-        "donate_points": 1212,
-      }
-  ]
+    "message": "成功，获得了2个用户的信息，排行榜类型为：互相关注的人。",
+    "code": 0,
+    "data": [
+        {
+            "light_spot_num": 0, //这是点亮的景点的数量
+            "footprint_point": 3040,//这是用户总的积分，只增不减的那种，产品的意思是排行榜按这个排
+            "rank": 1,//排第几位
+            "uid": "123",
+            "nickname": "西瓜蹦",
+            "point_remain": 40,//用户剩余的积分（总分减去捐赠的积分）
+            "profile_photo_url": "http://321421.com",
+            "sex": "1"
+        },
+        {
+            "light_spot_num": 0,
+            "footprint_point": 0,
+            "rank": 2,
+            "uid": "124",
+            "nickname": "匿名用户",
+            "point_remain": 0,
+            "profile_photo_url": "http://321426.com",
+            "sex": "1"
+        }
+    ]
 }
 ```
 
