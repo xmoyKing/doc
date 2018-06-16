@@ -396,3 +396,30 @@ pic表示图片原文件，二进制
   "data": {}
 }
 ```
+
+## 13.获取用户评论记录
+get_user_comments
+### request：
+```json
+{
+  "UID": "1223457"
+}
+```
+### response：
+```json
+{
+  "code": 0,
+  "message": "成功",
+  "data": [
+      {
+        "UID": 1223457,
+        "nickname": "youngou",
+        "profile_photo_url": "https://path/profile",
+        "sex": 1,
+        "comment": "景点很棒",
+        "timestamp": "2017-05-06 18:20",
+        "img_url":"http://11334"
+      }
+  ]
+}
+```
