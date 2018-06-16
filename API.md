@@ -178,6 +178,7 @@ get_spot_comments
         "sex": 1,
         "comment": "景点很棒",
         "timestamp": "2017-05-06 18:20",
+        "img_url":"http://11334"
       }
   ]
 }
