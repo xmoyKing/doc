@@ -423,3 +423,27 @@ get_user_comments
   ]
 }
 ```
+## 14.获取用户信息
+get_user_info
+### request：
+```json
+{
+  "UID": "1223457"
+}
+```
+### response：
+```json
+{
+  "code": 0,
+  "message": "成功",
+  "data": {
+        "UID": 1223457,
+        "nickname": "youngou",
+        "profile_photo_url": "https://path/profile",
+        "sex": 1,
+        "light_spot_num": "1",
+        "point_remain": "230",
+        "footprint_point":"230"
+      }
+}
+```
